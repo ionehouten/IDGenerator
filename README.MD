@@ -123,7 +123,7 @@ Currently supported databases are:</p>
         &lt;meta charset="utf-8"/&gt;
         &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
         &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
-        &lt;title&gt;I GENERATOR&lt;/title&gt;
+        &lt;title&gt;ID GENERATOR&lt;/title&gt;
         
         &lt;!-- START REQUIRED --&gt;
         &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/bootstrap/css/bootstrap.css); ?&gt;"/&gt;
