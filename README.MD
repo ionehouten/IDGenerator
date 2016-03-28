@@ -116,7 +116,7 @@ Currently supported databases are:</p>
 </code></pre></figure>  
 <h4>application/views/template/tpl_default.php (Default Template)</h4>
 <figure class="highlight"><pre><code class="html">
-<?php echo htmlspecialchars('<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
     <head>
         <meta charset="utf-8"/>
@@ -192,5 +192,5 @@ Currently supported databases are:</p>
         <?php $this->load->view('.'template/tpl_scripts'.'); ?>
         <!-- END REQUIRED -->
     </body>
-</html>') ;?>
+</html>
 </code></pre></figure>  
