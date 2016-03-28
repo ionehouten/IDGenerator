@@ -116,81 +116,82 @@ Currently supported databases are:</p>
 </code></pre></figure>  
 <h4>application/views/template/tpl_default.php (Default Template)</h4>
 <figure class="highlight"><pre><code class="html">
-<!DOCTYPE html>
-<html lang="id">
-    <head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>I GENERATOR</title>
+<figure class="highlight"><pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"/&gt;
+        &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
+        &lt;title&gt;I GENERATOR&lt;/title&gt;
         
-        <!-- START REQUIRED -->
-        <link rel="stylesheet" href="<?php echo base_url('.'common/bootstrap/css/bootstrap.css'.'); ?>"/>
-        <link rel="stylesheet" href="<?php echo base_url('.'common/theme/css/i_generator.css'.'); ?>"/>
-        <link rel="stylesheet" href="<?php echo base_url('.'common/plugins/validator/css/bootstrapValidator.min.css'.'); ?>"/>
-        <link rel="stylesheet" href="<?php echo base_url('.'common/fonts/font-awesome/css/font-awesome.min.css'.'); ?>"/>
-        <link rel="stylesheet" href="<?php echo base_url('.'common/plugins/fileinput/css/fileinput.css'.'); ?>"/>
-        <link rel="stylesheet" href="<?php echo base_url('.'common/theme/css/animate.css'.'); ?>"/>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesnt work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script src="<?php echo base_url('."common/jquery/jquery-2.2.0.min.js".'); ?>"></script>
-        <script src="<?php echo base_url('."common/plugins/fileinput/js/fileinput.js".'); ?>"></script>
-        <!-- END REQUIRED -->
-    </head>
+        &lt;!-- START REQUIRED --&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/bootstrap/css/bootstrap.css); ?&gt;"/&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/theme/css/i_generator.css); ?&gt;"/&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/plugins/validator/css/bootstrapValidator.min.css); ?&gt;"/&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/fonts/font-awesome/css/font-awesome.min.css); ?&gt;"/&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/plugins/fileinput/css/fileinput.css); ?&gt;"/&gt;
+        &lt;link rel="stylesheet" href="&lt;?php echo base_url(common/theme/css/animate.css); ?&gt;"/&gt;
+        &lt;!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --&gt;
+        &lt;!-- WARNING: Respond.js doesnt work if you view the page via file:// --&gt;
+        &lt;!--[if lt IE 9]&gt;
+        &lt;script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"&gt;&lt;/script&gt;
+        &lt;script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"&gt;&lt;/script&gt;
+        &lt;![endif]--&gt;
+        &lt;script src="&lt;?php echo base_url(common/jquery/jquery-2.2.0.min.js); ?&gt;"&gt;&lt;/script&gt;
+        &lt;script src="&lt;?php echo base_url(common/plugins/fileinput/js/fileinput.js); ?&gt;"&gt;&lt;/script&gt;
+        &lt;!-- END REQUIRED --&gt;
+    &lt;/head&gt;
 
-    <body>
+    &lt;body&gt;
         
-        <!-- START REQUIRED -->
-        <div class="notifications top-right"></div>
-        <div class="i_progress">
-            <div class="progress progress-striped active"><div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>
-        </div>
-        <div class="modal fade" id="modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p></p>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END REQUIRED -->
+        &lt;!-- START REQUIRED --&gt;
+        &lt;div class="notifications top-right"&gt;&lt;/div&gt;
+        &lt;div class="i_progress"&gt;
+            &lt;div class="progress progress-striped active"&gt;&lt;div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="modal fade" id="modal"&gt;
+            &lt;div class="modal-dialog"&gt;
+                &lt;div class="modal-content"&gt;
+                    &lt;div class="modal-header"&gt;
+                        &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                        &lt;h4 class="modal-title"&gt;&lt;/h4&gt;
+                    &lt;/div&gt;
+                    &lt;div class="modal-body"&gt;
+                        &lt;p&gt;&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="modal-footer"&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- END REQUIRED --&gt;
         
         
-        <div class="container">
-            <!-- START REQUIRED -->
-            <?php if ($this->session->flashdata("status")): ?>
-                <div class="alert alert-<?php echo $this->session->flashdata("status"); ?> alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong><?php echo ucfirst($this->session->flashdata("title")); ?></strong> <?php echo ucfirst($this->session->flashdata('.'message'.')); ?>
-                </div>
-            <?php endif; ?>
-            <!-- END REQUIRED -->
-            <!-- START REQUIRED //DO NOT RENAME ATTRIBUTE CLASS! -->
-            <div class='.'contents'.'>
-                <?php echo isset($contents) ? $contents : ""; ?>
-            </div>
-            <!-- END REQUIRED -->
+        &lt;div class="container"&gt;
+            &lt;!-- START REQUIRED --&gt;
+            &lt;?php if ($this-&gt;session-&gt;flashdata("status")): ?&gt;
+                &lt;div class="alert alert-&lt;?php echo $this-&gt;session-&gt;flashdata("status"); ?&gt; alert-dismissible" role="alert"&gt;
+                    &lt;button type="button" class="close" data-dismiss="alert" aria-label="Close"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+                    &lt;strong&gt;&lt;?php echo ucfirst($this-&gt;session-&gt;flashdata("title")); ?&gt;&lt;/strong&gt; &lt;?php echo ucfirst($this-&gt;session-&gt;flashdata(message)); ?&gt;
+                &lt;/div&gt;
+            &lt;?php endif; ?&gt;
+            &lt;!-- END REQUIRED --&gt;
+            &lt;!-- START REQUIRED //DO NOT RENAME ATTRIBUTE CLASS! --&gt;
+            &lt;div class=contents&gt;
+                &lt;?php echo isset($contents) ? $contents : ""; ?&gt;
+            &lt;/div&gt;
+            &lt;!-- END REQUIRED --&gt;
 
-        </div>
+        &lt;/div&gt;
         
         
-        <!-- START REQUIRED -->
-        <script src="<?php echo base_url('.'common/bootstrap/js/bootstrap.min.js'.'); ?>"></script>
-        <script src="<?php echo base_url('.'common/plugins/validator/js/bootstrapValidator.min.js'.'); ?>"></script>
-        <script src="<?php echo base_url('.'common/plugins/bootbox/js/bootbox.min.js'.'); ?>"></script>
-        <?php $this->load->view('.'template/tpl_scripts'.'); ?>
-        <!-- END REQUIRED -->
-    </body>
-</html>
+        &lt;!-- START REQUIRED --&gt;
+        &lt;script src="&lt;?php echo base_url(common/bootstrap/js/bootstrap.min.js); ?&gt;"&gt;&lt;/script&gt;
+        &lt;script src="&lt;?php echo base_url(common/plugins/validator/js/bootstrapValidator.min.js); ?&gt;"&gt;&lt;/script&gt;
+        &lt;script src="&lt;?php echo base_url(common/plugins/bootbox/js/bootbox.min.js); ?&gt;"&gt;&lt;/script&gt;
+        &lt;?php $this-&gt;load-&gt;view(template/tpl_scripts); ?&gt;
+        &lt;!-- END REQUIRED --&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
 </code></pre></figure>  
