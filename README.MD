@@ -34,7 +34,7 @@
 <p>IdGenerator it is a totally different idea and... more simple idea! With few simple PHP lines of code you can have all the functionality that you need to create your CRUD. So this means you <b>don't</b> have to copy the same Javascripts,CSS, views,models,vaildation rules,html code, grid, upload functionality ... e.t.c . again and again. To create again a CRUD for a different table you will just need simple PHP lines of code. </p><br>
 <p>The good part is that you don't even have to change the CSS to make it more user friendly. IdGenerator is ready for the production mode with all the required security and views.</p><br>
 <p><b>IdGenerator is an automatic CRUD generator</b> and it can cover almost all your needs for a CRUD system (simple or complex one) as it has many features and still keep going.</p><br>
-<p>Some of the main features of grocery CRUD are:</p>
+<p>Some of the main features of IdGenerator  are:</p>
 <ul class="with-arrows">
 	<li>Datagrid listing with paging, sorting, searching by field and search for all with ajax (flexigrid theme) or instant javascript scripting (datatables theme)</li>
 	<li>Automatic creation of inputs by field type. Till now the field types that auto-generate different inputs are: integer, string, text, date, datetime, set, enum, true_false(0 or 1), hidden, password and readonly</li>
