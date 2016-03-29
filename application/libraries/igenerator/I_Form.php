@@ -288,7 +288,7 @@ class I_Form extends I_Grid {
             $type = array_key_exists($val['type'], $this->form->type) ? $val['type'] : 'text';
             
             foreach($this->form->type[$type] as $key_dfl => $val_dfl){
-                if(isset($val[$key_dfl]) && empty(($val[$key_dfl])) ){
+                if(isset($val[$key_dfl]) && empty($val[$key_dfl]) ){
                     $val[$key_dfl] = $val_dfl;
                 }
             }
