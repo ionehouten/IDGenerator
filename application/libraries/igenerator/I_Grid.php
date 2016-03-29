@@ -1018,7 +1018,7 @@ class I_Grid extends I_GeneratorBridge {
         foreach($this->search->columns as $key => $val){
             $val['type'] = array_key_exists($val['type'], $this->search->type) ? $val['type'] : 'text';
             foreach($this->search->type[$val['type']] as $key_dfl => $val_dfl){
-                if(isset($val[$key_dfl]) && empty(($val[$key_dfl])) ){
+                if(isset($val[$key_dfl]) && empty($val[$key_dfl]) ){
                     $val[$key_dfl] = $val_dfl;
                 }
             }
