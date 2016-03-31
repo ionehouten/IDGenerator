@@ -55,7 +55,7 @@ $config['i_grid']['layout']['panel']['main']['attr']['class']                   
 $config['i_grid']['layout']['panel']['table']['tag_open']                         = '<div>';
 $config['i_grid']['layout']['panel']['table']['tag_close']                        = '</div>';
 $config['i_grid']['layout']['panel']['table']['attr']['id']       = "panel-table";
-$config['i_grid']['layout']['panel']['table']['attr']['class']    = 'x_panel panel panel-primary';
+$config['i_grid']['layout']['panel']['table']['attr']['class']    = 'panel panel-primary';
 $config['i_grid']['layout']['panel']['form']['tag_open']                         = '<div>';
 $config['i_grid']['layout']['panel']['form']['tag_close']                        = '</div>';
 $config['i_grid']['layout']['panel']['form']['attr']['id']                  = "panel-form";
@@ -282,14 +282,14 @@ $config['i_grid']['form']['type']['default']['data'] = array();
 $config['i_btn']['default']['tag_open']        = '<button>';
 $config['i_btn']['default']['tag_close']          = '</button>';
 
-$config['i_btn']['search']['text']           ='<i class="fa fa-search"> Search</i>';
+$config['i_btn']['search']['text']           ='<i class="fa fa-search"></i> Search';
 $config['i_btn']['search']['attr']['type']            = 'submit';
 $config['i_btn']['search']['attr']['class']     ='i_btn_search btn btn-success';
-$config['i_btn']['save']['text']           ='<i class="fa fa-search"> Save</i>';
+$config['i_btn']['save']['text']           ='<i class="fa fa-search"></i> Save';
 $config['i_btn']['save']['attr']['type']            = 'submit';
 $config['i_btn']['save']['attr']['class']     ='i_btn_search btn btn-success';
 $config['i_btn']['save']['attr']['data-toggle']   = 'tooltip';
-$config['i_btn']['reset']['text']           ='<i class="fa fa-refresh"> Reset</i>';
+$config['i_btn']['reset']['text']           ='<i class="fa fa-refresh"></i> Reset';
 $config['i_btn']['reset']['attr']['type']            = 'reset';
 $config['i_btn']['reset']['attr']['class']     ='i_btn_create btn btn-warning';
 
@@ -298,7 +298,7 @@ $config['i_link']['default']['tag_open']        = '<a>';
 $config['i_link']['default']['tag_close']          = '</a>';
 $config['i_link']['default']['query'] = '';
 
-$config['i_link']['create']['text']         = '<i class="fa fa-edit"> Create</i>';
+$config['i_link']['create']['text']         = '<i class="fa fa-edit"></i> Create';
 $config['i_link']['create']['attr']['class']         = 'i_link_create btn  btn-default';
 $config['i_link']['create']['attr']['data-toggle']   = 'tooltip';
 $config['i_link']['create']['query'] = 'action=create&request=form';
@@ -310,7 +310,7 @@ $config['i_link']['update']['attr']['data-toggle']   = 'tooltip';
 $config['i_link']['update']['query'] = 'action=update&request=form';
 
 $config['i_link']['view']['text']         = '<i class="fa fa-external-link"> </i> ';
-$config['i_link']['view']['attr']['title']    = 'Update';
+$config['i_link']['view']['attr']['title']    = 'View';
 $config['i_link']['view']['attr']['class']         = 'i_link_update btn btn-xs btn-default';
 $config['i_link']['view']['attr']['data-toggle']   = 'tooltip';
 $config['i_link']['view']['query'] = 'action=update&request=view';
@@ -323,13 +323,13 @@ $config['i_link']['delete']['attr']['data-confirm']  ='Apakah Anda Akan Mengapus
 $config['i_link']['delete']['attr']['action'] = 'delete';
 $config['i_link']['delete']['query'] = 'action=delete';
 
-$config['i_link']['back']['text']           ='<i class="fa fa-undo"> Back</i>';
+$config['i_link']['back']['text']           ='<i class="fa fa-undo"></i> Back';
 $config['i_link']['back']['attr']['class']     ='i_link_back btn btn-success';
 
-$config['i_link']['search']['text']           ='<i class="fa fa-search"> Search</i>';
+$config['i_link']['search']['text']           ='<i class="fa fa-search"></i> Search';
 $config['i_link']['search']['attr']['class']     ='i_link_search btn btn-default panel-collapsed';
 
-$config['i_link']['refresh']['text']           ='<i class="fa fa-refresh"> Refresh</i>';
+$config['i_link']['refresh']['text']           ='<i class="fa fa-refresh"></i> Refresh';
 $config['i_link']['refresh']['attr']['class']     ='i_link_refresh btn btn-default';
 $config['i_link']['refresh']['query'] = 'action=refresh';
 
