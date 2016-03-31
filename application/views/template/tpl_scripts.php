@@ -688,7 +688,7 @@ $(function() {
    
 });
 
-$(document).on("click", '.panel-heading a.i_link_search', function (e) {
+$(document).on("click", '.panel-heading .i_link_search', function (e) {
     e.preventDefault();
     if ($(this).hasClass('panel-collapsed')) {
         // expand the panel
