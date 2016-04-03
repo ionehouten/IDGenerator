@@ -65,6 +65,7 @@ class I_Table {
     public $params = array();
     public $params_count = array();
     public $fields = array();
+    public $primary = array();
     
     
     private $field_list = array();
@@ -97,13 +98,21 @@ class I_Table {
             $this->fields = array();
             $field_data = $this->data('fielddata');
         }else{
-            if(!empty($this->view)){
-                $field_data = $this->CI->db->field_data($this->view);
+            
+           
+            if(count($this->join) > 0 || count($this->fields) > 0 ){
+                $field_data = $this->data('fielddata');
+                
             }else{
-                $field_data = $this->CI->db->field_data($this->name);
+                if(!empty($this->view)){
+                    $field_data = $this->CI->db->field_data($this->view);
+                }else{
+                    $field_data = $this->CI->db->field_data($this->name);
+                }
             }
-             
         }
+        
+        
         foreach ($field_data as $key => $val) {
             switch ($val->type){
                 case "1": $val->type = 'tinyint'; break;
@@ -125,15 +134,16 @@ class I_Table {
                 case "254": $val->type = 'char';break;
                 case "date": $val->max_length = 10;
             }
-            
+            $val->name = strtolower($val->name);
             $this->field_list[$val->name] = $val->name;
             $this->field_data[$val->name]['name'] = $val->name;
             $this->field_data[$val->name]['type'] = $val->type;
             $this->field_data[$val->name]['max_length'] = $val->max_length;
             $this->field_data[$val->name]['primary_key'] = $val->primary_key;
 
-            if ($val->primary_key == 1) {
+            if ($val->primary_key > 0) {
                 $this->index = $val->name;
+                $this->primary[count($this->primary)] = '$'.$val->name;
             }
             
         }
@@ -142,20 +152,23 @@ class I_Table {
             foreach ($this->fields as $key => $val) {
                 $this->fields[$key] = strtolower($val);
                 $val = explode(' as ', strtolower($val));
-                $this->field_list[strtolower($val[0])] = strtolower($val[count($val) - 1]);
+                $val_key = strtolower($val[0]);
+                $val_val = strtolower($val[count($val) - 1]);
+                $val_key = explode('.', $val_key);
+                $val_key = strtolower($val_key[count($val_key) - 1]);
+                
+                $this->field_list[trim($val_key)] =  trim($val_val);
             }
         } else {
             $this->fields = $this->field_list;
         }
         
         foreach ($this->field_list as $key => $val) {
-            $type = $this->field_data[$key]['type'] ;
-            $this->field_data[$key]['max_length'] = ($this->field_data[$key]['max_length'] > 50) ? 10 : $this->field_data[$key]['max_length'] ;
-             
-            $this->field_length = $this->field_length + $this->field_data[$key]['max_length'];
-           
+            if(isset( $this->field_data[$val])){
+                $this->field_data[$val]['max_length'] = ($this->field_data[$val]['max_length'] > 50) ? 10 : $this->field_data[$val]['max_length'] ;
+                $this->field_length = $this->field_length + $this->field_data[$val]['max_length'];
+            }
         }
-        
     }
     
     public function get_lookup($table, $fields = array(), $where = "", $order = ""){
@@ -231,7 +244,10 @@ class I_Table {
 
 
     public function data($return = 'result') {
+        
         $output = null;
+        $tmp_offset = $this->offset;
+        $tmp_limit = $this->limit;
         if($return != "fielddata"){
             if (count($this->field_list) == 0) {
                 $this->get_fields();
@@ -253,7 +269,6 @@ class I_Table {
             }else{
                 $this->CI->db->from($this->name);
             }
-            
 
             if (is_array($this->join)) {
                 foreach ($this->join as $key => $val) {
@@ -287,14 +302,15 @@ class I_Table {
                 $this->CI->db->order_by($this->order);
             }
 
-            if ($return != 'total') {
+            if ($return != 'total' && $return != 'fielddata') {
                 if ($this->limit > 0) {
                     $this->page = ($this->page > 0) ? ($this->page - 1) : $this->page;
                     $this->offset = $this->limit * $this->page;
                     $this->CI->db->limit($this->limit, $this->offset);
                 }
             }
-
+            
+            
 
             switch ($return) {
                 case 'null' :
@@ -319,6 +335,12 @@ class I_Table {
                 case 'query' :
                     $output = $this->CI->db->get_compiled_select();
                     break;
+                case 'fielddata' :
+                    $this->query =  $this->CI->db->get_compiled_select();
+                    
+                    $output = $this->data('fielddata');
+                    $this->query = "";
+                    break;
                 default :
                     $output = NULL;
                     break;
@@ -341,11 +363,10 @@ class I_Table {
             if ($this->CI->db->dbprefix !== '' && $this->CI->db->swap_pre !== '' && $this->CI->db->dbprefix !== $this->CI->db->swap_pre) {
                 $query = preg_replace('/(\W)' . $this->CI->db->swap_pre . '(\S+?)/', '\\1' . $this->CI->db->dbprefix . '\\2', $sql);
             }
+            
             if (count($params) > 0) {
                 $query  = $this->CI->db->compile_binds($query, $params);
             }
-            
-            //$query = "SELECT idgn.* FROM (".$query.") idgn ";
             
             if (!empty($this->where)) {
                  $query .= " WHERE " .$this->where.' ';
@@ -394,8 +415,7 @@ class I_Table {
                     }
                 }
             }
-            
-            
+           
             $query = $this->CI->db->query($query);
             
             switch ($return) {
@@ -438,8 +458,12 @@ class I_Table {
                     break;
             }           
         }
-
-
+        
+        if($return == 'fielddata'){
+            $this->offset =  $tmp_offset;
+            $this->limit = $tmp_limit;
+        }
+        
         return $output;
     }
 

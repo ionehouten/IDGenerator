@@ -50,8 +50,6 @@
  */
 class I_Upload{
     
-    public $CI = null;
-    
     private $file_post = null;
     private $file_path;
     private $file_name;
@@ -60,7 +58,6 @@ class I_Upload{
     public $file_error = null;
 
     function __construct() {
-        $this->CI = &get_instance();
     }
     
     /**
@@ -74,7 +71,6 @@ class I_Upload{
      * 
      */
     public function image($config = array()){
-        
     
         if (!is_array($config)) {
             return;
@@ -128,7 +124,7 @@ class I_Upload{
 
                 imagecopyresized($img_resized,imagecreatefrompng($this->file_post['tmp_name']),0,0,0,0,$new_w,$new_h,$ori_w,$ori_h);
                 
-                $create = @imagepng($img_resized,$filename,1);
+                $create = imagepng($img_resized,$filename,1);
                 
                 
                 break;

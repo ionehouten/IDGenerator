@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['i_table']['page'] = 0;
 $config['i_table']['offset'] = 0;
-$config['i_table']['limit'] = 20;
+$config['i_table']['limit'] = 5;
 
 $config['i_grid']['id'] = 1;
 $config['i_grid']['properties']['icon']           ='<i class="fa fa-table"></i>';
@@ -35,6 +35,10 @@ $config['i_grid']['properties']['thumb']['doc']['attr']['target']       = '_blan
 
 $config['i_grid']['properties']['extension']['doc'] =  array('doc','docx','txt','zip','xls','xlsx','ppt','pptx');
 $config['i_grid']['properties']['extension']['img'] =  array('jpg','bmp','png','gif','jpeg');
+
+$config['i_grid']['properties']['default_method']['create'] = 'form';
+$config['i_grid']['properties']['default_method']['update'] = 'form';
+$config['i_grid']['properties']['default_method']['delete'] = 'form';
 
 
 
@@ -189,6 +193,8 @@ $config['i_grid']['search']['type']['default']['logic']    = 'AND';
 $config['i_grid']['search']['type']['default']['data'] = array();
 
 
+
+
 $config['i_grid']['form']['main']['form']['uri'] = '';
 $config['i_grid']['form']['main']['form']['attr']['id']             = '';
 $config['i_grid']['form']['main']['form']['attr']['class']          = 'i_form_input form-vertical';
@@ -270,13 +276,20 @@ $config['i_grid']['form']['type']['image']['upload']['show_remove']         = tr
 $config['i_grid']['form']['type']['image']['upload']['show_preview']         = 1;
 $config['i_grid']['form']['type']['image']['extension']   = array('jpg','bmp','png','gif','jpeg');
 
-
 $config['i_grid']['form']['type']['default']['group_open'] = '<div class = "col-sm-12"><div class="form-group">';
 $config['i_grid']['form']['type']['default']['group_close'] = '</div></div>';
 $config['i_grid']['form']['type']['default']['label_open'] = '<label class="control-label">';
 $config['i_grid']['form']['type']['default']['label_close'] = '</label>';
-
 $config['i_grid']['form']['type']['default']['data'] = array();
+
+$config['i_grid']['upload']['image']['file_path'] = 'common/uploads/images/';
+$config['i_grid']['upload']['image']['img_height'] = 640;
+$config['i_grid']['upload']['image']['img_width'] = 480;
+$config['i_grid']['upload']['image']['thumbnails'] = true;
+$config['i_grid']['upload']['image']['file_path_thumb'] = 'common/uploads/images/thumb/';
+$config['i_grid']['upload']['image']['img_height_thumb'] = 64;
+$config['i_grid']['upload']['image']['img_width_thumb'] = 64;
+$config['i_grid']['upload']['file']['file_path'] = 'common/uploads/files/';
 
 
 $config['i_btn']['default']['tag_open']        = '<button>';
@@ -302,6 +315,7 @@ $config['i_link']['create']['text']         = '<i class="fa fa-edit"> Create</i>
 $config['i_link']['create']['attr']['class']         = 'i_link_create btn  btn-default';
 $config['i_link']['create']['attr']['data-toggle']   = 'tooltip';
 $config['i_link']['create']['query'] = 'action=create&request=form';
+
 
 $config['i_link']['update']['text']         = '<i class="fa fa-edit"> </i> ';
 $config['i_link']['update']['attr']['title']    = 'Update';

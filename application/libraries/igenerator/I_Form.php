@@ -51,6 +51,7 @@
 class I_Form extends I_Grid {
     
     public $form;
+    public $upload ;
     public function __construct() {
         parent::__construct();
     }
@@ -75,6 +76,9 @@ class I_Form extends I_Grid {
         
         $this->form = new ID_form();
         $this->initialize($this->config['form'], 'form');
+        
+        $this->upload = new ID_upload();
+        $this->initialize($this->config['upload'], 'upload');
         
         $this->uri = I_Generator::get_uri();
         
@@ -122,6 +126,7 @@ class I_Form extends I_Grid {
         $this->parse_attributes($this->vars['properties'], 'properties');
         $this->parse_attributes($this->vars['html'], 'html');
         $this->parse_attributes($this->vars['form'], 'form');
+        $this->parse_attributes($this->vars['upload'], 'upload');
         
         $this->link['default']['attr']['id_generator'] = $this->id;
         $this->link['default']['attr']['id_grid'] = $this->properties->id_prefix_grid;
@@ -288,7 +293,7 @@ class I_Form extends I_Grid {
             $type = array_key_exists($val['type'], $this->form->type) ? $val['type'] : 'text';
             
             foreach($this->form->type[$type] as $key_dfl => $val_dfl){
-                if(isset($val[$key_dfl]) && empty(($val[$key_dfl])) ){
+                if(isset($val[$key_dfl]) && empty($val[$key_dfl]) ){
                     $val[$key_dfl] = $val_dfl;
                 }
             }
@@ -480,7 +485,59 @@ class I_Form extends I_Grid {
         return $output;
     }
     
-    
+    public function upload_image($fieldname, $attr = ''){
+        $config = $this->upload->image;
+        $config['file_name'] = $this->create_key();
+        $config['file_post'] = $this->get_files($fieldname);
+            
+        if(!empty($config['file_post'])){
+            if(is_string($attr) && !empty($attr)){
+                $config['file_name'] =  $attr;
+            }
+            if(is_array($attr)){
+                foreach($attr as $key => $val){
+                    if(isset($config[$key])){
+                        $config[$key] = $val;
+                    }
+                }
+            }
+            $upload = $this->CI->i_upload->image($config);
+            if($upload){
+                $this->set_input($fieldname,$upload);
+                if($config['thumbnails'] == true){
+                    $config['file_path'] = $config['file_path_thumb'];
+                    $config['img_height'] = $config['img_height_thumb'];
+                    $config['img_width'] = $config['img_width_thumb'];
+                    $upload = $this->CI->i_upload->image($config);
+                }
+                $this->remove_file($this->get_input($fieldname.'_old'));
+                $this->remove_file($config['file_path_thumb'].  basename($this->get_input($fieldname.'_old')));
+            }
+        }
+    }
+    public function upload_file($fieldname, $attr = ''){
+        $config = $this->upload->file;
+        $config['file_name'] = $this->create_key();
+        $config['file_post'] = $this->get_files($fieldname);
+            
+        if(!empty($config['file_post'])){
+            if(is_string($attr) && !empty($attr)){
+                $config['file_name'] =  $attr;
+            }
+            if(is_array($attr)){
+                foreach($attr as $key => $val){
+                    if(isset($config[$key])){
+                        $config[$key] = $val;
+                    }
+                }
+            }
+            $upload = $this->CI->i_upload->file($config);
+            if($upload){
+                $this->set_input($fieldname,$upload);
+                $this->remove_file($this->get_input($fieldname.'_old'));
+            }
+        }
+    }
     
 }
 
@@ -593,4 +650,9 @@ class ID_form{
     public function set_column_attr_string($fieldname,$attr){
         $this->columns[$fieldname]['attr_str'] = $attr;
     }
+}
+
+class ID_upload{
+    public $image = array();
+    public $file = array();
 }

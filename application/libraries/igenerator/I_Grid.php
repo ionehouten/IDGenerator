@@ -171,6 +171,7 @@ class I_Grid extends I_GeneratorBridge {
     }
 
     protected function parse_attribute($data){
+        
          foreach ($data as $key_data => $val_data) {
             if (is_array($val_data)) {
                 if (isset($val_data['uri'])) {
@@ -199,27 +200,25 @@ class I_Grid extends I_GeneratorBridge {
                         
                         if ($key_dtl == 'attr' && is_array($val_dtl)) {
                             
-                            
-                            $data[$key_data][$key_dtl] = '';
+                            $data[$key_data]['attr_str'] = '';
                             foreach ($val_dtl as $key_attr => $val_attr) {
-                                $data[$key_data][$key_dtl] .= sprintf(' %s="%s"', $key_attr, $val_attr);
+                                $data[$key_data]['attr_str'] .= sprintf(' %s="%s"', $key_attr, $val_attr);
                             }
-                            $data[$key_data]['attr_str']= $data[$key_data][$key_dtl];
+                            //$data[$key_data]['attr_str']= $data[$key_data][$key_dtl];
                           
+                        }else{
+                            $data[$key_data]['attr_str'] = $data[$key_data]['attr'] = '';;
                         }
 
-                        if (isset($data[$key_data]['tag_open']) && isset($data[$key_data]['tag_close']) && isset($data[$key_data]['attr'])) {
+                        if (isset($data[$key_data]['tag_open']) && isset($data[$key_data]['tag_close']) && isset($data[$key_data]['attr_str'])) {
                             $tag_open = substr($data[$key_data]['tag_open'], 0, strlen($data[$key_data]['tag_open']) - 1);
-                            $tag_open .= $data[$key_data]['attr'];
+                            $tag_open .= $data[$key_data]['attr_str'];
                             $tag_open .= substr($data[$key_data]['tag_open'], strlen($data[$key_data]['tag_open']) - 1, 1);
                             $data[$key_data]['tag_open'] = $tag_open;
 
                             if (isset($data[$key_data]['text'])) {
                                 $data[$key_data]['tag_full'] = $data[$key_data]['tag_open'] . $data[$key_data]['text'] . $data[$key_data]['tag_close'];
                             }
-
-
-                            unset($data[$key_data]['attr']);
                         }
                     }
                 }
@@ -311,19 +310,22 @@ class I_Grid extends I_GeneratorBridge {
     protected function set_column(){
         
         $this->table->get_fields();
+        
         if (count($this->view->columns) == 0) {
             foreach ($this->table->get_field_list() as $key => $val) {
-                $total_length = $this->table->get_field_length();
-                $max_length = $this->table->get_field_data()[$key]['max_length'];
-                $type = $this->table->get_field_data()[$key]['type'];
-                $primary_key = $this->table->get_field_data()[$key]['primary_key'];
-                if($max_length === 0){
-                    $width = 0;
-                }else{
-                    $width = ceil(($max_length / $total_length) * 100)."%";
+                if(isset($this->table->get_field_data()[$val])){
+                    $total_length = $this->table->get_field_length();
+                    $max_length = $this->table->get_field_data()[$val]['max_length'];
+                    $type = $this->table->get_field_data()[$val]['type'];
+                    $primary_key = $this->table->get_field_data()[$val]['primary_key'];
+                    if($max_length === 0){
+                        $width = 0;
+                    }else{
+                        $width = ceil(($max_length / $total_length) * 100)."%";
+                    }
+                    $this->view->add_column($val,$val,$width);
                 }
                 
-                $this->view->add_column($val,$val,$width);
             }
         }
         
@@ -369,11 +371,11 @@ class I_Grid extends I_GeneratorBridge {
                 return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 
             case 'md5':
-                //return md5(uniqid(mt_rand()));
-                return md5(date('ymdhis') . round(microtime(true) * 1000));
+                return md5(uniqid(mt_rand()));
+                //return md5(date('ymdhis') . round(microtime(true) * 1000));
             case 'sha1':
-                //return sha1(uniqid(mt_rand(), TRUE));
-                return sha1(date('ymdhis') . round(microtime(true) * 1000));
+                return sha1(uniqid(mt_rand(), TRUE));
+                //return sha1(date('ymdhis') . round(microtime(true) * 1000));
         }
     }
 
@@ -392,7 +394,7 @@ class I_Grid extends I_GeneratorBridge {
     }
     
     public function set_join($table,$condition, $type =''){
-        $i = count($this->join);
+        $i = count($this->table->join);
         $this->table->join[$i]['table'] = $table;
         $this->table->join[$i]['cond'] = $condition;
         $this->table->join[$i]['type'] = $type;
@@ -503,14 +505,24 @@ class I_Grid extends I_GeneratorBridge {
         $this->link['default']['attr']['id_generator'] = $this->id;
         $this->link['default']['attr']['id_grid'] = $this->properties->id_prefix_grid;
         
+       
         foreach( $this->link as $key => $val){
             if($key != 'default'){
-                if(!isset($this->link[$key]['attr']['href'])){
+                if(!isset($this->link[$key]['attr']['uri'])){
                     $this->link[$key]['attr']['href'] = current_url();
                 }
+                
             }
-            
         }
+        $segments = $this->uri['segments'];
+        $segments[count($segments)] = $this->properties->default_method['create'];
+        
+        if(isset($this->link['create'])){
+            if(!isset($this->link['create']['uri'])){
+                $this->link['create']['uri'] =$segments;
+            }
+        }
+     
         
         $this->link = $this->parse_attribute($this->link);
         $this->btn = $this->parse_attribute($this->btn);
@@ -643,25 +655,52 @@ class I_Grid extends I_GeneratorBridge {
                         $links = $this->CI->config->item('i_link');
                         
                         foreach ($val_col['link'] as $key_link => $val_link) {
-                            if (isset($val_link['uri'])) {
-                                $attr_uri_ex = explode('/', $val_link['uri']);
-
-                                foreach ($attr_uri_ex as $key_attr_uri => $val_attr_uri) {
-                                    $attr_var = substr($val_attr_uri, 0, 1);
-                                    if ($attr_var == '$') {
-                                        $attr_uri_ex[$key_attr_uri] = $val_data[substr($val_attr_uri, 1, strlen($val_attr_uri))];
-                                    }
-                                }
-                                $attr_uri_im = implode('/', $attr_uri_ex);
-                               
-                                $val_link['uri'] = $attr_uri_im;
-                            }
                             if(isset($links[$val_link['name']])){
+                                
                                 $link['default'] = $links['default'];
                                 $link['default']['attr']['id_generator'] = $this->id;
                                 $link['default']['attr']['id_grid'] = $this->properties->id_prefix_grid;
-                                $link[$val_link['name']]  = $links[$val_link['name']];
-                                $link[$val_link['name']]['uri'] = $val_link['uri'];
+                                
+                                if(isset($val_link['name'])){
+                                    $link[$val_link['name']]  = $links[$val_link['name']];
+                                }
+                                if(!isset($val_link['uri'])){
+                                    $val_link['uri'] ="";
+                                }
+                                
+                                if(empty($val_link['uri'])){
+                                    if(isset($this->properties->default_method[$val_link['name']])){
+                                        $segments = $this->uri['segments'];
+                                        $segments[count($segments)] = $this->properties->default_method[$val_link['name']];
+                                        $segments = array_merge($segments,$this->table->primary);
+                                        $val_link['uri'] = $segments;
+                                    }
+                                        
+                                }
+                                
+                                if(isset($val_link['uri'])){
+                                     $link[$val_link['name']]['uri'] = $val_link['uri'];
+                                }
+                                
+                                if (isset($link[$val_link['name']]['uri'])) {
+                                    
+                                    if(is_array($link[$val_link['name']]['uri'])){
+                                        $link[$val_link['name']]['uri']= implode('/', $link[$val_link['name']]['uri']);
+                                    }
+                                    
+                                    $attr_uri_ex = explode('/', $link[$val_link['name']]['uri']);
+                                    
+
+                                    foreach ($attr_uri_ex as $key_attr_uri => $val_attr_uri) {
+                                        $attr_var = substr($val_attr_uri, 0, 1);
+                                        if ($attr_var == '$') {
+                                            $attr_uri_ex[$key_attr_uri] = trim($val_data[substr($val_attr_uri, 1, strlen($val_attr_uri))]);
+                                        }
+                                    }
+                                    $attr_uri_im = implode('/', $attr_uri_ex);
+                                   
+                                    $link[$val_link['name']]['uri'] = $attr_uri_im;
+                                }
                                 $link = $this->parse_attribute($link);
                                 $output .= $link[$val_link['name']]['tag_full'];
                             }
@@ -1018,7 +1057,7 @@ class I_Grid extends I_GeneratorBridge {
         foreach($this->search->columns as $key => $val){
             $val['type'] = array_key_exists($val['type'], $this->search->type) ? $val['type'] : 'text';
             foreach($this->search->type[$val['type']] as $key_dfl => $val_dfl){
-                if(isset($val[$key_dfl]) && empty(($val[$key_dfl])) ){
+                if(isset($val[$key_dfl]) && empty($val[$key_dfl]) ){
                     $val[$key_dfl] = $val_dfl;
                 }
             }
@@ -1246,9 +1285,11 @@ class I_Grid extends I_GeneratorBridge {
 
         return $input;
     }
+    
     public function set_input($name, $value){
         $_POST[$name] = $value;
     }
+    
     public function remove_file($filepath){
         if(file_exists($filepath)){
             @unlink($filepath);
@@ -1271,6 +1312,7 @@ class ID_properties {
     public $link = array();
     public $thumb = array();
     public $extension = array();
+    public $default_method = array();
 
 }
 
@@ -1443,7 +1485,10 @@ class ID_view {
         //$links = $this->columns[$this->index_row][$fieldname]['link'];
         $links = array();
         $links[$i]['name'] = $name;
-        $links[$i]['uri'] = $uri;
+        if(!empty($uri)){
+            $links[$i]['uri'] = $uri;
+        }
+        
         $this->set_column('link',$fieldname, $links,'add');
         
        

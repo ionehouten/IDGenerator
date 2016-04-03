@@ -59,7 +59,7 @@ Abstract class I_GeneratorBridge  {
     public function __construct() {
         $this->CI =& get_instance();
         $this->CI->load->config('i_generator');
-        $this->CI->load->helpers(array('form_helper','i_generator'));
+        $this->CI->load->helpers(array('form_helper','html_helper'));
         $this->CI->load->library(array('igenerator/I_Table'));
         $this->registry = new ArrayObject(array(), ArrayObject::STD_PROP_LIST);
         $this->table = new I_Table();
