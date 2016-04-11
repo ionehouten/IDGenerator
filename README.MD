@@ -195,3 +195,5 @@ Currently supported databases are:</p>
     &lt;/body&gt;
 &lt;/html&gt;</code></pre></figure>
 </code></pre></figure>  
+
+For more example see our <a href="idgenerator.mitos.or.id">Example Page</a>
