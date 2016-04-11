@@ -196,4 +196,4 @@ Currently supported databases are:</p>
 &lt;/html&gt;</code></pre></figure>
 </code></pre></figure>  
 
-For more example see our <a href="http://idgenerator.mitos.or.id">Example Page</a>
+For more example see our <a href="http://idgenerator.mitos.or.id" target="_blank">Example Page</a>
